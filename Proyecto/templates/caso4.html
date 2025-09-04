@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Caso 4 - Éxito ML{% endblock %}
+{% block content %}
+
+<article class="blog-post">
+    <header class="mb-4">
+        <h1 class="fw-bold">Caso 4: Éxito en Machine Learning</h1>
+        <p class="text-muted">
+            Publicado el <time datetime="2025-09-02">2 de septiembre de 2025</time> · Autor: Equipo de Investigación
+        </p>
+    </header>
+
+    <figure class="mb-4">
+        <img src="{{ url_for('static', filename='images/aguacate.jpg') }}" alt="Cultivo de Aguacate Hass">
+        </figcaption>
+</figure>
+
+    <section class="mb-4">
+       <p>
+      En Colombia, el cultivo de <b>aguacate Hass</b> se ha consolidado como un producto de exportación clave, 
+      pero enfrenta graves pérdidas debido a plagas como el picudo y la polilla, que pueden afectar hasta el <b>60 % de la producción</b>.
+      Investigadores de <b>Agrosavia</b> y la <b>Universidad Nacional de Colombia, sede Palmira,</b> desarrollaron un sistema de <b>
+      Machine Learning supervisado</b> entrenado con datos históricos y de campo, como lo es el clima, las fechas de siembra, el tamaño del fruto, 
+      la genética, el manejo del cultivo, entre otras. Con esto se puede identificar patrones predictivos de aparición de plagas en zonas 
+      específicas del lote.
+    </p>
+    <p>
+      El modelo alcanza una <b>precisión cercana al 80 %</b> en la detección temprana de áreas de riesgo, permitiendo intervenciones focalizadas, 
+      reducción en el uso indiscriminado de insecticidas y mejor rendimiento exportable del cultivo. Este caso demuestra cómo el aprendizaje 
+      supervisado potencia la sostenibilidad y competitividad del sector agrícola en Colombia
+    </p>
+
+    </section>
+
+    <section class="mb-4">
+        <h2>Referencias:</h2>
+        <li><a href="https://www.agronet.gov.co/Noticias/Paginas/La-inteligencia-artificial-predice-con-alta-precisi%C3%B3n-plagas-en-aguacate-Hass.aspx" target="_blank">Agronet.gov</a></li>
+        <li><a href="https://www.agronegocios.co/agricultura/inteligencia-artificial-puede-predecir-y-detectar-plagas-en-aguacate-hass-3570486" target="_blank">Agronegocios.co</a></li>
+        <li><a href="https://dplnews.com/cientificos-colombianos-crean-ia-que-predice-plagas-que-afecta-el-aguacate-hass/" target="_blank">DPL News</a></li>
+</article>
+
+{% endblock %}
