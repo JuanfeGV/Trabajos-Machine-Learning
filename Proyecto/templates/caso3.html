@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Caso 3 - Éxito ML{% endblock %}
+{% block content %}
+
+<article class="blog-post">
+    <header class="mb-4">
+        <h1 class="fw-bold">Caso 3: Éxito en Machine Learning</h1>
+        <p class="text-muted">
+            Publicado el <time datetime="2025-09-02">2 de septiembre de 2025</time> · Autor: Equipo de Investigación
+        </p>
+    </header>
+
+    <figure class="mb-4">
+        <img src="{{ url_for('static', filename='images/julieta.jpg') }}" alt="Dispositivo Julieta - Salva Health">
+        </figcaption>
+</figure>
+
+    <section class="mb-4">
+       <p>
+            En Colombia, el cáncer de mama sigue siendo una de las principales causas de muerte en mujeres, en gran parte por la detección tardía y la falta de acceso a mamografías en regiones apartadas. 
+            Frente a esta problemática, la startup <b>Salva Health</b>, fundada por Valentina Agudelo (CEO), creó <b>Julieta</b>, un dispositivo portátil que, mediante electrodos, mide la conductividad del tejido mamario. 
+            Estos datos, recolectados en minutos y sin necesidad de equipos costosos, se convierten en la base para entrenar un sistema de <b>Machine Learning supervisado</b>, alimentado con miles de registros clínicamente validados. 
+            El modelo aprende a diferenciar entre tejidos normales y anómalos, ofreciendo un tamizaje rápido y accesible.
+        </p>
+
+        <p>
+            Gracias al aprendizaje supervisado, Julieta ha alcanzado niveles de precisión entre el <b>82% y el 92%</b>, detectando oportunamente anomalías y priorizando a las pacientes que requieren estudios confirmatorios. 
+            Con más de 3.000 pruebas realizadas en distintas ciudades de Colombia y decenas de casos confirmados de cáncer detectados, la solución demuestra cómo la IA supervisada puede adaptarse a contextos de salud pública, 
+            reduciendo barreras de tiempo, costo y geografía.
+        </p>
+
+        <p>
+            El impacto e innovación del proyecto llevó a que Valentina Agudelo fuera elegida ganadora de la competición global <b>Startup Battlefield 2024</b> en la conferencia TechCrunch Disrupt de San Francisco, 
+            superando a más de 2.000 empresas, consolidando a Julieta como un caso de éxito mundial en el uso de Machine Learning para la salud.
+        </p>
+
+    </section>
+
+    <section class="mb-4">
+        <h2>Referencias:</h2>
+            <li><a href="https://elpais.com/planeta-futuro/2025-08-02/valentina-agudelo-ganadora-del-premio-princesa-de-girona-nadie-deberia-morir-de-cancer-de-mama-es-un-problema-de-tiempo.html" target="_blank">El País</a></li>
+            <li><a href="https://startupslatam.com/soy-julieta-el-dispositivo-colombiano-que-busca-reducir-la-mortalidad-del-cancer-de-mamas-con-ia/" target="_blank">Startups Latam</a></li>
+            <li><a href="https://behealthtechnology.com/julieta-la-innovacion-colombiana-que-transforma-la-deteccion-del-cancer-de-mama/" target="_blank">BeHealth</a></li>
+            <li><a href="https://www.eltiempo.com/vida/ciencia/la-colombiana-premiada-en-espana-explica-como-su-ia-detecta-el-riesgo-de-cancer-de-mama-3463152" target="_blank">El Tiempo</a></li>
+            <li><a href="https://www.xataka.com.co/medicina-y-salud/soy-julieta-emprendimiento-colombiano-que-detecta-cancer-seno-ia-acaba-ganar-premio-internacional" target="_blank">Xataka Colombia</a></li>
+            <li><a href="https://www.semana.com/foros-semana/articulo/julieta-el-revolucionario-dispositivo-colombiano-para-detectar-el-cancer-de-mama-en-poblaciones-remotas/202435/" target="_blank">Semana</a></li>
+</section>
+</article>
+
+{% endblock %}
