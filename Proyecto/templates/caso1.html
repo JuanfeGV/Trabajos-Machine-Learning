@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Aplicaciones exitosas de Machine Learning Supervisado en distintas industrias{% endblock %}
+{% block content %}
+
+<article class="blog-post">
+    <header class="mb-4">
+        <h1 class="fw-bold">Caso 1: Éxito en Machine Learning</h1>
+        <p class="text-muted">
+            Publicado el <time datetime="2025-09-02">2 de septiembre de 2025</time> · Autor: Equipo de Investigación
+        </p>
+    </header>
+
+    <figure class="mb-4">
+        <img src="https://tse2.mm.bing.net/th/id/OIP.aAXGr1NiEPEK2KwTV66OCQHaE8?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" 
+             width="600" height="300"
+             class="img-fluid rounded" 
+             alt="Imagen representativa del caso">
+        <figcaption class="text-muted mt-2">
+            Imagen ilustrativa del caso
+        </figcaption>
+</figure>
+
+    <section class="mb-4">
+        <p>
+            Problema que se resolvió: La proliferación de correos electrónicos maliciosos, como spam y 
+            phishing, representa una amenaza constante para la seguridad digital de los usuarios. 
+            La necesidad de filtrar automáticamente estos mensajes ha impulsado el desarrollo de 
+            sistemas inteligentes capaces de clasificarlos con alta precisión.
+        </p>
+        <p>
+            Se emplearon diversos algoritmos supervisados, entre ellos:
+<p>
+        - Naive Bayes Multinomial
+</p>
+<p>
+        - Árboles de Decisión
+</p>
+<p>
+        - K-Vecinos más Cercanos (KNN)
+</p>
+        - Bosques Aleatorios
+
+        El modelo Naive Bayes Multinomial demostró ser el más eficiente en términos de velocidad y 
+        precisión, especialmente en tareas de clasificación de texto.
+        </p>
+        <p>
+        Beneficios obtenidos:
+<p>
+        - Alta precisión en la detección de correos spam y phishing.
+</p>
+<p>
+        -  Reducción significativa de falsos positivos.
+</p>
+<p>
+        -  Automatización del filtrado de correos electrónicos.
+</p>
+        - Aplicación práctica en entornos reales, como cuentas de Gmail, para validar el desempeño del modelo.
+        </p>
+        <p>
+            
+        </p>
+    </section>
+
+    <section class="mb-4">
+        <h4>Ejemplo concreto de implementación</h2>
+        <p>
+            El proyecto desarrollado por Alejandro Vázquez Gómez en 
+            la Universidad Politécnica de Madrid consistió en entrenar modelos supervisados con datasets
+             reales de correos electrónicos. Se implementó una interfaz que permitía analizar mensajes 
+             directamente desde una cuenta de Gmail, y se desarrolló un segundo modelo para detectar 
+             URLs sospechosas en correos con enlaces, mejorando la detección de intentos de phishing.
+        </p>
+    </section>
+
+    <footer class="border-top pt-3">
+        <small class="text-muted">
+            
+        </small>
+    </footer>
+</article>
+
+{% endblock %}
