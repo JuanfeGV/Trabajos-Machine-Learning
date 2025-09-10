@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Actividad 2{% endblock %}
+{% block content %}
+<h2 class="mb-4">Actividad 2</h2>
+<div class="list-group">
+    <a href="{{ url_for('conceptosRL') }}" class="list-group-item list-group-item-action">Conceptos básicos Regresión Lineal</a>
+    <a href="{{ url_for('calculateGlucose') }}" class="list-group-item list-group-item-action">Ejercicio práctico</a>
+</div>
+{% endblock %}
+
