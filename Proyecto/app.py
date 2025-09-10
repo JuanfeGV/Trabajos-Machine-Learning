@@ -39,6 +39,10 @@ def actividad2():
 def conceptosRL():
     return render_template('Actividad2/conceptosRL.html')
 
+@app.route('/actividad2/glucosa')
+def glucosa():
+    return render_template('glucosa.html')
+
 @app.route('/actividad2/ejercicios', methods=["GET", "POST"])
 def calculateGlucose():
     result = None
