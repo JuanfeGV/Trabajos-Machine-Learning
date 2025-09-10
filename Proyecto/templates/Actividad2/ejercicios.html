@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Conceptos Básicos de Regresión Lineal{% endblock %}
+{% block content %}
+
+<html lang="es">
+  <h1><b>Ejercicio práctico de regresión lineal</b></h1>
+  <div class="card p-3 mb-3">
+    <h5>Explicación de los datos utilizados</h5>
+    <p>
+        El conjunto de datos utilizado consiste enla relación entre la
+        <strong>edad</strong> y las <strong>horas de sueño</strong> con el 
+        <strong>nivel de glucosa</strong>.  
+    </p>
+    <ul>
+        <li><b>Edad</b>: años del paciente.</li>
+        <li><b>Horas de sueño</b>: tiempo promedio de descanso.</li>
+        <li><b>Glucosa</b>: nivel estimado de glucosa (mg/dL).</li>
+    </ul>
+    <p>
+        Para este ejercicio se emplea un modelo de regresión lineal simple,
+        donde las variables independientes son la edad y las horas de sueño, y la variable dependiente es el nivel de glucosa.
+    </p>
+</div>
+<div class="card p-3 mb-3">
+    <h5>Predicción del nivel de glucosa</h5>
+    <p>Modelo para calcular el nivel de glucosa respecto a las variables: <b>Edad</b> y <b>Horas de sueño</b>.</p>
+
+    <form method="post" class="row g-3">
+        <div class="col-md-6">
+            <label for="edad" class="form-label"><b>Edad</b></label>
+            <input type="number" name="edad" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+            <label for="sueno" class="form-label"><b>Horas de sueño</b></label>
+            <input type="number" name="sueno" class="form-control" required>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-success">Predecir</button>
+        </div>
+    </form>
+
+    {% if result is not none %}
+        <div class="alert alert-success mt-4">
+            <h3>Nivel estimado de glucosa: {{result}} mg/dL</h3>
+        </div>
+    {% endif %}
+</div>
+<div class="card p-3 mb-3">
+
+    <h5>Visualización de los datos de entrenamiento</h5>
+    <p>A continuación se muestran las relaciones entre las variables y la glucosa estimada:</p>
+    <h6>Gráfico Edad vs Glucosa</h6>
+    <img src="{{ url_for('static', filename='edad_img.png') }}" alt="Regresión Edad">
+    <img src="{{ url_for('static', filename='sueno_img.png') }}" alt="Regresión Sueño">
+
+    <h6>Gráfico Sueño vs Glucosa</h6>
+    <img src="{{ url_for('static', filename='regresion_sueno.png') }}" class="img-fluid" alt="Gráfico Sueño">
+</div>
+</body>
+</html>
+{% endblock %}
