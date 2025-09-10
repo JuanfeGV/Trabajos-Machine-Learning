@@ -29,14 +29,12 @@ def calculateGlucose(edad: float, sueno: float) -> float:
     return float(result)
 
 def plot_regression():
-    # Asegura carpeta static/img
-    static_dir = os.path.join("static", "img")
+    # Asegura carpeta static/images
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # carpeta donde está Linealregression.py
+    static_dir = os.path.join(BASE_DIR, "static", "images")
     os.makedirs(static_dir, exist_ok=True)
 
-
-    y_pred = model.predict(X)
-
-
+    # 1) Edad vs Glucosa (mantener sueño en su media)
     sueno_mean = float(df["sueno"].mean())
     edad_grid = np.linspace(df["edad"].min(), df["edad"].max(), 100)
     X_line_edad = np.column_stack([edad_grid, np.full_like(edad_grid, sueno_mean)])
@@ -54,7 +52,7 @@ def plot_regression():
     plt.savefig(edad_path)
     plt.close()
 
-    # 2) Sueño vs Glucosa (mantener edad en su media para la línea)
+    # 2) Sueño vs Glucosa (mantener edad en su media)
     edad_mean = float(df["edad"].mean())
     sueno_grid = np.linspace(df["sueno"].min(), df["sueno"].max(), 100)
     X_line_sueno = np.column_stack([np.full_like(sueno_grid, edad_mean), sueno_grid])
@@ -72,5 +70,6 @@ def plot_regression():
     plt.savefig(sueno_path)
     plt.close()
 
-    # Devolver rutas relativas a /static
-    return "img/regresion_edad.png", "img/regresion_sueno.png"
+    return "images/regresion_edad.png", "images/regresion_sueno.png"
+
+

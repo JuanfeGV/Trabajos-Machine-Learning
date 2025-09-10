@@ -1,7 +1,7 @@
 # app.py
 from flask import Flask, render_template, request
 import time
-import Linealregression
+import Proyecto.Linealregression as Linealregression
 
 app = Flask(__name__)
 

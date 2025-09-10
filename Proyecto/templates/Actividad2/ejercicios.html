@@ -14,7 +14,11 @@
     <ul>
         <li><b>Edad</b>: años del paciente.</li>
         <li><b>Horas de sueño</b>: tiempo promedio de descanso.</li>
-        <li><b>Glucosa</b>: nivel estimado de glucosa (mg/dL).</li>
+        <li><b>Glucosa:</b></li>
+        <p>se miden en miligramos por decilitro (mg/dL) y los rangos aceptados son:
+            <br><span style="color: green;">Normal:</span> 70 – 99 mg/dL
+            <br><span style="color: orange;">Prediabetes:</span> 100 – 125 mg/dL
+            <br><span style="color: red;">Diabetes:</span> ≥ 126 mg/dL</p>
     </ul>
     <p>
         Para este ejercicio se emplea un modelo de regresión lineal simple,
@@ -49,12 +53,19 @@
 
     <h5>Visualización de los datos de entrenamiento</h5>
     <p>A continuación se muestran las relaciones entre las variables y la glucosa estimada:</p>
-    <h6>Gráfico Edad vs Glucosa</h6>
-    <img src="{{ url_for('static', filename='edad_img.png') }}" alt="Regresión Edad">
-    <img src="{{ url_for('static', filename='sueno_img.png') }}" alt="Regresión Sueño">
+<div style="display: flex; gap: 20px; align-items: center;">
+    <div>
+        <img src="{{ url_for('static', filename='images/regresion_edad.png') }}"
+             width="450" height="350"
+             class="img-fluid rounded">
+    </div>
+    <div>
+        <img src="{{ url_for('static', filename='images/regresion_sueno.png') }}"
+             width="450" height="350"
+             class="img-fluid rounded">
+    </div>
+</div>
 
-    <h6>Gráfico Sueño vs Glucosa</h6>
-    <img src="{{ url_for('static', filename='regresion_sueno.png') }}" class="img-fluid" alt="Gráfico Sueño">
 </div>
 </body>
 </html>
