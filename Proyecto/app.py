@@ -2,7 +2,7 @@
 from flask import Flask, render_template, request
 import time
 import Linealregression as Linealregression
-from Logicalregression import train_and_evaluate, save_confusion_matrix
+from Logicalregression import evaluate, save_confusion_matrix
 
 app = Flask(__name__)
 
@@ -95,7 +95,7 @@ def logicalregression():
     features = valid_features[variable]
 
     try:
-        model, accuracy, report, conf_matrix = train_and_evaluate(features)
+        model, accuracy, report, conf_matrix = evaluate(features)
         img_path = save_confusion_matrix(conf_matrix, variable)
     except Exception as e:
         # Mostrar el error real en la página

@@ -11,23 +11,32 @@ from sklearn.metrics import confusion_matrix, accuracy_score, classification_rep
 data = pd.read_csv('C:\\Users\\yessi\\OneDrive\\Escritorio\\U\\Machine learning\\clone\\Trabajos-Machine-Learning\\Proyecto\\datasheet\\data1.csv')
 
 
-def train_and_evaluate(features, target="Renuncia", test_size=0.2, random_state=23):
-    X = data[features]
+def evaluate(features, target="Renuncia", test_size=0.2, random_state=23):
+    X = data[features].copy()
     y = data[target]
 
+    # One-hot encoding solo para la columna 'Areadetrabajo', si está en features
+    if 'Areadetrabajo' in X.columns:
+        X = pd.get_dummies(X, columns=['Areadetrabajo'])
+
+    # División train/test
     x_train, x_test, y_train, y_test = train_test_split(
         X, y, test_size=test_size, random_state=random_state, stratify=y
     )
 
+    # Escalado (solo afecta las columnas numéricas; las dummy se mantienen como 0/1)
     scaler = StandardScaler()
     x_train_scaled = scaler.fit_transform(x_train)
     x_test_scaled = scaler.transform(x_test)
 
-    model = LogisticRegression()
+    # Modelo
+    model = LogisticRegression(max_iter=1000)  # aseguramos convergencia
     model.fit(x_train_scaled, y_train)
 
+    # Predicciones
     y_pred = model.predict(x_test_scaled)
 
+    # Métricas
     accuracy = accuracy_score(y_test, y_pred)
     report = classification_report(y_test, y_pred, digits=4, output_dict=True)
     conf_matrix = confusion_matrix(y_test, y_pred)
