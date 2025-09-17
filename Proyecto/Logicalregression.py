@@ -41,7 +41,7 @@ def evaluate(features, target="Renuncia", test_size=0.2, random_state=23):
     report = classification_report(y_test, y_pred, digits=4, output_dict=True)
     conf_matrix = confusion_matrix(y_test, y_pred)
 
-    return model, accuracy, report, conf_matrix
+    return model, accuracy*100, report, conf_matrix
 
 def save_confusion_matrix(conf_matrix, filename="matriz.png", variable=None):
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
