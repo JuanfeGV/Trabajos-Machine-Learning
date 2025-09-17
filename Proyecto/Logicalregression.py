@@ -49,7 +49,7 @@ def save_confusion_matrix(conf_matrix, filename="matriz.png", variable=None):
     plt.savefig(path)
     plt.close()
 
-    return f"images/{filename}"
+    return f"images/{filename}".replace("\\", "/")
 
 def predict_label(model, scaler, features, threshold=0.5):
     """

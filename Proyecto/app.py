@@ -83,7 +83,7 @@ def conceptosRLog():
 
 @app.route('/actividad3/ejercicios')
 def logicalregression():
-    variable = request.args.get("var", "horas_extra")  # valor por defecto
+    variable = request.args.get("var", "antiguedad")  # valor por defecto
 
     valid_features = {
         "antiguedad": ["Antiguedad"],
