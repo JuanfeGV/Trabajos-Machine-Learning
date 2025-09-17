@@ -3,38 +3,47 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.compose import ColumnTransformer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix, accuracy_score, classification_report
 
 # Cargar dataset globalmente
-data = pd.read_csv('Proyecto\datasheet\data1.csv')
+data = pd.read_csv('C:\\Users\\yessi\\OneDrive\\Escritorio\\U\\Machine learning\\clone\\Trabajos-Machine-Learning\\Proyecto\\datasheet\\data1.csv')
 
 
 def evaluate(features, target="Renuncia", test_size=0.2, random_state=23):
     X = data[features].copy()
     y = data[target]
 
-    # One-hot encoding solo para la columna 'Areadetrabajo', si está en features
-    if 'Areadetrabajo' in X.columns:
-        X = pd.get_dummies(X, columns=['Areadetrabajo'])
+    # Definir columnas categóricas y numéricas
+    categorical_features = [col for col in features if col == "Areadetrabajo"]
+    numeric_features = [col for col in features if col != "Areadetrabajo"]
+
+    # Transformador: OneHotEncoder para categóricas, StandardScaler para numéricas
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ("num", StandardScaler(), numeric_features),
+            ("cat", OneHotEncoder(drop="first"), categorical_features)
+        ],
+        remainder="drop"
+    )
 
     # División train/test
     x_train, x_test, y_train, y_test = train_test_split(
         X, y, test_size=test_size, random_state=random_state, stratify=y
     )
 
-    # Escalado (solo afecta las columnas numéricas; las dummy se mantienen como 0/1)
-    scaler = StandardScaler()
-    x_train_scaled = scaler.fit_transform(x_train)
-    x_test_scaled = scaler.transform(x_test)
+    # Preprocesamiento
+    x_train_pre = preprocessor.fit_transform(x_train)
+    x_test_pre = preprocessor.transform(x_test)
 
     # Modelo
-    model = LogisticRegression(max_iter=1000)  # aseguramos convergencia
-    model.fit(x_train_scaled, y_train)
+    model = LogisticRegression(max_iter=1000)
+    model.fit(x_train_pre, y_train)
 
     # Predicciones
-    y_pred = model.predict(x_test_scaled)
+    y_pred = model.predict(x_test_pre)
 
     # Métricas
     accuracy = accuracy_score(y_test, y_pred)
@@ -42,6 +51,7 @@ def evaluate(features, target="Renuncia", test_size=0.2, random_state=23):
     conf_matrix = confusion_matrix(y_test, y_pred)
 
     return model, accuracy*100, report, conf_matrix
+
 
 def save_confusion_matrix(conf_matrix, filename="matriz.png", variable=None):
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -60,11 +70,13 @@ def save_confusion_matrix(conf_matrix, filename="matriz.png", variable=None):
 
     return f"images/{filename}".replace("\\", "/")
 
-def predict_label(model, scaler, features, threshold=0.5):
+
+def predict_label(model, preprocessor, features, threshold=0.5):
     """
     features: lista con valores [antiguedad, salario, area, horas]
     """
-    X = scaler.transform([features])
-    prob = model.predict_proba(X)[0][1]
+    X = pd.DataFrame([features], columns=["Antiguedad", "Nivelsalarial(smlv)", "Areadetrabajo", "Horasextra"])
+    X_pre = preprocessor.transform(X)
+    prob = model.predict_proba(X_pre)[0][1]
     label = "Sí" if prob >= threshold else "No"
     return label, round(prob, 4)
