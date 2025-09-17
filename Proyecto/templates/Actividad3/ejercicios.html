@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Ejercicios de Regresión Logística{% endblock %}
+{% block content %}
+
+<h1><b>Ejercicio práctico de regresión logística</b></h1>
+
+<div class="card p-3 mb-3">
+    <h5>Generar gráfica de regresión</h5>
+    <p>Haz clic en una de las variables para analizar su relación con la renuncia del empleado:</p>
+
+    <div class="row text-center">
+        <div class="col-md-3 mb-2">
+            <a href="{{ url_for('logicalregression', var='antiguedad') }}" class="btn btn-outline-primary w-100">
+                Antigüedad en la empresa
+            </a>
+        </div>
+        <div class="col-md-3 mb-2">
+            <a href="{{ url_for('logicalregression', var='salario') }}" class="btn btn-outline-success w-100">
+                Nivel salarial
+            </a>
+        </div>
+        <div class="col-md-3 mb-2">
+            <a href="{{ url_for('logicalregression', var='area') }}" class="btn btn-outline-warning w-100">
+                Área de trabajo
+            </a>
+        </div>
+        <div class="col-md-3 mb-2">
+            <a href="{{ url_for('logicalregression', var='horas_extra') }}" class="btn btn-outline-danger w-100">
+                Horas extra
+            </a>
+        </div>
+    </div>
+</div>
+
+{% if img_path %}
+<div class="card p-3 mb-3">
+    <h5>Resultados del modelo</h5>
+    <p><b>Variable seleccionada:</b> {{ variable }}</p>
+    <p><b>Exactitud del modelo:</b> {{ accuracy }}</p>
+
+    <div class="mt-3 text-center">
+        <img src="{{ url_for('static', filename=img_path) }}"
+             width="600" height="400"
+             class="img-fluid rounded shadow">
+    </div>
+
+    <div class="mt-4">
+        <h6>Reporte de clasificación</h6>
+        <pre>{{ report }}</pre>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

@@ -1,7 +1,8 @@
 # app.py
 from flask import Flask, render_template, request
 import time
-import Proyecto.Linealregression as Linealregression
+import Linealregression as Linealregression
+from Logicalregression import train_and_evaluate, save_confusion_matrix
 
 app = Flask(__name__)
 
@@ -73,7 +74,43 @@ def calculateGlucose():
 # ------------------- Actividad 3 -------------------
 @app.route('/actividad3')
 def actividad3():
-    return "<h1>Actividad 3 (aún no implementada)</h1>"
+    return render_template('Actividad3/actividad3.html')
+
+@app.route('/actividad3/conceptosRLog')
+def conceptosRLog():
+    return render_template('Actividad3/conceptosRLog.html')
+
+
+@app.route('/actividad3/ejercicios')
+def logicalregression():
+    variable = request.args.get("var", "horas_extra")  # valor por defecto
+
+    valid_features = {
+        "antiguedad": ["Antiguedad"],
+        "salario": ["Nivelsalarial(smlv)"],
+        "horas_extra": ["Horasextra"],
+        "area": ["Areadetrabajo"]
+    }
+
+    features = valid_features[variable]
+
+    try:
+        model, accuracy, report, conf_matrix = train_and_evaluate(features)
+        img_path = save_confusion_matrix(conf_matrix, variable)
+    except Exception as e:
+        # Mostrar el error real en la página
+        import traceback
+        return f"<h1>Error al procesar '{variable}'</h1><pre>{traceback.format_exc()}</pre>"
+
+    return render_template(
+        "Actividad3/ejercicios.html",
+        variable=variable.capitalize(),
+        accuracy=round(accuracy, 4),
+        report=report,
+        img_path=img_path
+    )
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
