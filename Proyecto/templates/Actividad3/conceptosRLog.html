@@ -1,109 +1,61 @@
 {% extends "base.html" %}
-{% block title %}Conceptos básicos de regresión lineal{% endblock %}
+{% block title %}Conceptos básicos de regresión logística{% endblock %}
 {% block content %}
 
 <article class="blog-post">
     <header class="mb-4">
-        <h1 class="fw-bold">Conceptos básicos de regresión lineal</h1>
+        <h1 class="fw-bold">Conceptos básicos de regresión logística</h1>
         <p class="text-muted">
-            Publicado el <time datetime="2025-09-10">10 de septiembre de 2025</time>
+            Publicado el <time datetime="2025-09-17">17 de septiembre de 2025</time>
         </p>
     </header>
 
- <section class="mb-4">
-        <h3>Definición de regresión lineal</h3>
+    <section class="mb-4">
+        <h3>Definición de regresión logística</h3>
         <p>
-            La (regresión lineal) es un método estadístico utilizado para modelar la relación entre una variable dependiente 
-            y una o varias variables independientes. Su propósito principal es predecir el valor de la variable dependiente 
-            a partir de los valores de las independientes, ajustando una línea recta que representa mejor la relación observada en los datos.
-        </p>
-        <p>
-            En la forma más simple (regresión lineal simple), el modelo se expresa como:
+            La regresión logística sirve para modelar la probabilidad de que ocurra un evento cuando la variable de respuesta 
+            sólo puede asumir dos valores, como puede ser éxito o fracaso. A diferencia de la regresión lineal, donde la relación 
+            entre la variable dependiente y las independientes es continua, en este caso se busca que los resultados se encuentren 
+            siempre dentro del rango de 0 a 1, es decir, que se interpreten como probabilidades.
         </p>
 
         <figure class="mb-4">
-            <img src="{{ url_for('static', filename='images/Regresion_Lineal.jpg') }}"
+            <img src="{{ url_for('static', filename='images/Regresion_Logistica.jpg') }}"
                 width="600" height="300"
                 class="img-fluid rounded">
             <figcaption class="text-muted mt-2">
-                Imagen ilustrativa sobre el concepto de regresión lineal.
-                (2019, September 10).
+                Imagen ilustrativa sobre el concepto de regresión logística.
+                (Autor desconocido, 2024).
             </figcaption>
         </figure>
-
+        
         <p>
-            Donde "Y" es la variable dependiente, "X" la variable independiente, 
-            "a" el intercepto, "b" el coeficiente de regresión y "e" el error.
-            Los puntos dispersos en la imagen representan observaciones reales, mientras que la recta muestra 
-            la mejor aproximación a la relación entre ambas variables.
+            En la imagen se observa que el modelo parte de una transformación logarítmica de la razón de probabilidades (odds), 
+            que luego se convierte en una función logística. Esta función genera una curva en forma de “S”, lo que permite que, 
+            a medida que aumenta la variable independiente x, la probabilidad se acerque de manera asintótica a 0 o a 1, sin 
+            sobrepasar esos valores.
         </p>
-    </section>
 
-    <section class="mb-4">
-        <h3>Supuestos habituales</h3>
-        <p>Para garantizar la validez del modelo, se deben cumplir los siguientes supuestos:</p>
-        <ul>
-            <li><strong>Linealidad:</strong> la relación entre variables debe ser lineal.</li>
-            <li><strong>Independencia:</strong> los errores (residuos) deben ser independientes entre sí.</li>
-            <li><strong>Homoscedasticidad:</strong> la varianza de los errores debe mantenerse constante.</li>
-            <li><strong>Normalidad del error:</strong> los errores deben seguir una distribución normal con media cero.</li>
-        </ul>
         <p>
-            Estos supuestos aseguran que las estimaciones de los coeficientes sean confiables 
-            y que las pruebas de hipótesis realizadas sean válidas.
-        </p>
-    </section>
-
-    <section class="mb-4">
-        <h3>Ejemplo práctico</h3>
-        <p>
-            Supongamos que deseamos analizar la relación entre las <em>horas de sueño</em> (X1), 
-            la <em>edad</em> (X2) y el nivel de <em>glucosa en la sangre</em> (Y). 
-            La regresión lineal nos permite observar cómo estos factores influyen de manera aproximada 
-            en la variable dependiente (glucosa), aunque aquí lo veremos de forma general.
+            El gráfico de la derecha ilustra claramente cómo funciona este proceso:
         </p>
         <ul>
-            <li>Menos horas de sueño tienden a relacionarse con un nivel de glucosa más alto, 
-                debido al impacto del descanso en el metabolismo (<strong>linealidad</strong>).</li>
-            <li>La glucosa de una persona no debe depender directamente de la de otra 
-                (<strong>independencia</strong>).</li>
-            <li>La variabilidad en los niveles de glucosa debe ser relativamente constante 
-                entre diferentes grupos de edad o patrones de sueño (<strong>homoscedasticidad</strong>).</li>
-            <li>Factores no observados (como alimentación o estrés) se asumen distribuidos de forma normal 
-                (<strong>normalidad</strong>).</li>
+            <li>En el eje horizontal se representan los valores de la variable predictora.</li>
+            <li>En el eje vertical se encuentra la probabilidad de que ocurra el evento.</li>
+            <li>Los puntos rojos representan casos en los que el resultado fue 0 (evento no ocurrido).</li>
+            <li>Los símbolos verdes representan casos en los que el resultado fue 1 (evento ocurrido).</li>
+            <li>La curva azul que atraviesa los datos corresponde a la función logística ajustada.</li>
         </ul>
         <p>
-            En esta actividad, además, se desarrolló un una opcion extra en el menú, donde se profundiza y se habla un poco más 
-            de cómo los cambios en las horas de sueño y la edad afectan el nivel de glucosa en la sangre.
+            Puede notarse que cuando x es pequeño, la probabilidad es cercana a 0, mientras que a medida que x aumenta, la 
+            probabilidad se acerca progresivamente a 1. El punto intermedio, cercano a 0.5 en el eje vertical, indica el umbral 
+            de decisión: por encima de este valor se predice la ocurrencia del evento, mientras que por debajo se predice su ausencia.
+        </p>
+        <p>
+            Este enfoque no solo permite clasificar observaciones en dos categorías, sino también interpretar los coeficientes 
+            del modelo como el efecto que tiene cada variable independiente en la probabilidad de ocurrencia del evento.
         </p>
     </section>
-
-        <footer class="border-top pt-3">
-            <h3 class=>Bibliografía</h3>
-            <small class="text-muted">
-
-            <p class="apa-citation">Ec. Ricardo Contreras, MBA. (n.d.). <em>Regresión Lineal: aspectos básicos</em> [Video]. YouTube.
-            <a href="https://www.youtube.com/watch?v=5OuNibX2Zeo" target="_blank" rel="noopener noreferrer">
-            https://www.youtube.com/watch?v=5OuNibX2Zeo</a></p>
-
-            <p class="apa-citation">DataCamp. (n.d.). <em>Simple linear regression tutorial</em>. DataCamp. 
-            <a href="https://www.datacamp.com/es/tutorial/simple-linear-regression?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer">
-            https://www.datacamp.com/es/tutorial/simple-linear-regression</a></p>
-
-            <p class="apa-citation">RStudio Pubs. (n.d.). <em>Regresión lineal ejemplo</em>. RStudio Pubs. 
-            <a href="https://rstudio-pubs-static.s3.amazonaws.com/740953_5b6d2acfe47b43b99a7d898d13ff9aec.html?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer">
-            https://rstudio-pubs-static.s3.amazonaws.com/740953_5b6d2acfe47b43b99a7d898d13ff9aec.html</a></p>
-
-            <p class="apa-citation">Probabilidad y Estadística.net. (n.d.). <em>Regresión lineal</em>. Probabilidad y Estadística.net. 
-            <a href="https://www.probabilidadyestadistica.net/regresion-lineal/" target="_blank" rel="noopener noreferrer">
-            https://www.probabilidadyestadistica.net/regresion-lineal/</a></p>
-
-            <p class="apa-citation">Universidad de los Andes. (n.d.). <em>Regresión lineal</em>. Blog de Programas, Universidad de los Andes. 
-            <a href="https://programas.uniandes.edu.co/blog/regresion-lineal" target="_blank" rel="noopener noreferrer">
-            https://programas.uniandes.edu.co/blog/regresion-lineal</a></p>
-
-        </small>
-    </footer>
 </article>
 
 {% endblock %}
