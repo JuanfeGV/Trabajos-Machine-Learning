@@ -3,6 +3,7 @@ from flask import Flask, render_template, request
 import time
 import Linealregression as Linealregression
 from Logicalregression import evaluate, save_confusion_matrix
+from gbm_leads import evaluate as gbm_evaluate, predict_label as gbm_predict
 
 app = Flask(__name__)
 
@@ -109,6 +110,19 @@ def logicalregression():
         report=report,
         img_path=img_path
     )
+
+# ------------------- Actividad 4 -------------------
+@app.route('/Actividad4/ejercicios')
+def gbm_exercises():
+    metrics, confusion_matrix_path = gbm_evaluate()
+
+    return render_template(
+        'Actividad4/ejercicios.html',
+        accuracy=metrics['accuracy'],
+        report=metrics['classification_report'],
+        confusion_matrix=confusion_matrix_path
+    )
+
 
 
 
