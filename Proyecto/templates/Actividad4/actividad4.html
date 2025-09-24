@@ -1,10 +1,17 @@
 {% extends "base.html" %}
-{% block title %}Actividad 3{% endblock %}
+{% block title %}Actividad 4 - Gradient Boosting{% endblock %}
 {% block content %}
-<h2 class="mb-4">Actividad 3</h2>
-<div class="list-group">
-    <a href="{{ url_for('conceptosymapa') }}" class="list-group-item list-group-item-action">Conceptos básicos de regresión Logística</a>
-    <a href="{{ url_for('logicalregression') }}" class="list-group-item list-group-item-action">Ejercicio práctico</a>
-</div>
-{% endblock %}
 
+<h1>Actividad 4</h1>
+<p class="lead">Gradient Boosting Machines (GBM)</p>
+
+<div class="list-group">
+    <a href="{{ url_for('conceptosGBM') }}" class="list-group-item list-group-item-action">
+        Conceptos básicos de Gradient Boosting
+    </a>
+    <a href="{{ url_for('ejerciciosGBM') }}" class="list-group-item list-group-item-action">
+        Ejercicio práctico
+    </a>
+</div>
+
+{% endblock %}

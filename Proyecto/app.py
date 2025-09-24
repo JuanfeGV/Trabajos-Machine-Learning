@@ -3,11 +3,12 @@ from flask import Flask, render_template, request
 import time
 import Linealregression as Linealregression
 from Logicalregression import evaluate, save_confusion_matrix
-from gbm_leads import evaluate as gbm_evaluate, predict_label as gbm_predict
+from GBM import train_and_evaluate  # Import para la actividad 4
 
 app = Flask(__name__)
 
-@app.route('/')  # Ruta principal
+# ------------------- Ruta principal -------------------
+@app.route('/')
 def index():
     return render_template('index.html')
 
@@ -61,7 +62,6 @@ def calculateGlucose():
             edad_img, sueno_img = Linealregression.plot_regression()
 
         except Exception as e:
-            # Muestra el error en consola para depurar rápido
             print("Error en /actividad2/ejercicios:", e)
 
     return render_template(
@@ -81,7 +81,6 @@ def actividad3():
 def conceptosRLog():
     return render_template('Actividad3/conceptosRLog.html')
 
-
 @app.route('/actividad3/ejercicios')
 def logicalregression():
     variable = request.args.get("var", "antiguedad")  # valor por defecto
@@ -99,7 +98,6 @@ def logicalregression():
         model, accuracy, report, conf_matrix = evaluate(features)
         img_path = save_confusion_matrix(conf_matrix, variable)
     except Exception as e:
-        # Mostrar el error real en la página
         import traceback
         return f"<h1>Error al procesar '{variable}'</h1><pre>{traceback.format_exc()}</pre>"
 
@@ -111,20 +109,34 @@ def logicalregression():
         img_path=img_path
     )
 
-# ------------------- Actividad 4 -------------------
-@app.route('/Actividad4/ejercicios')
-def gbm_exercises():
-    metrics, confusion_matrix_path = gbm_evaluate()
+# ------------------- Actividad 4 (GBM) -------------------
+@app.route('/actividad4')
+def actividad4():
+    return render_template('Actividad4/actividad4.html')
+
+@app.route('/actividad4/conceptosGBM')
+def conceptosGBM():
+    return render_template('Actividad4/conceptosGBM.html')
+
+@app.route('/actividad4/ejercicios')
+def ejerciciosGBM():
+    variable = request.args.get("var", None)
+
+    try:
+        accuracy, report, img_path, feature_importances = train_and_evaluate(variable)
+    except Exception as e:
+        import traceback
+        return f"<h1>Error en GBM</h1><pre>{traceback.format_exc()}</pre>"
 
     return render_template(
-        'Actividad4/ejercicios.html',
-        accuracy=metrics['accuracy'],
-        report=metrics['classification_report'],
-        confusion_matrix=confusion_matrix_path
+        "Actividad4/ejerciciosGBM.html",
+        variable=variable.capitalize() if variable else "Todas",
+        accuracy=round(accuracy, 4),
+        report=report,
+        img_path=img_path,
+        feature_importances=feature_importances.to_dict(orient="records")
     )
 
-
-
-
+# ------------------- Main -------------------
 if __name__ == '__main__':
     app.run(debug=True)

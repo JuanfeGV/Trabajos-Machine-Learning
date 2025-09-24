@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block title %}Ejercicios - GBM{% endblock %}
+{% block content %}
+
+<h1><b>Ejercicio práctico: Gradient Boosting Machines (GBM)</b></h1>
+
+<div class="card p-3 mb-3">
+    <h5>Generar modelo de clasificación</h5>
+    <p>
+        Haz clic en una de las variables independientes para entrenar y evaluar el modelo 
+        de <b>probabilidad de conversión</b> con base en esa característica:
+    </p>
+
+    <div class="row text-center">
+        <div class="col-md-4 mb-2">
+            <a href="{{ url_for('ejerciciosGBM', var='fuente') }}" class="btn btn-outline-primary w-100">
+                Fuente del lead
+            </a>
+        </div>
+        <div class="col-md-4 mb-2">
+            <a href="{{ url_for('ejerciciosGBM', var='interacciones') }}" class="btn btn-outline-success w-100">
+                Interacciones con campañas
+            </a>
+        </div>
+        <div class="col-md-4 mb-2">
+            <a href="{{ url_for('ejerciciosGBM', var='visitas') }}" class="btn btn-outline-warning w-100">
+                Visitas al sitio web
+            </a>
+        </div>
+        <div class="col-md-4 mb-2">
+            <a href="{{ url_for('ejerciciosGBM', var='ingresos') }}" class="btn btn-outline-info w-100">
+                Ingresos estimados
+            </a>
+        </div>
+        <div class="col-md-4 mb-2">
+            <a href="{{ url_for('ejerciciosGBM', var='sector') }}" class="btn btn-outline-danger w-100">
+                Sector económico
+            </a>
+        </div>
+        <div class="col-md-4 mb-2">
+            <a href="{{ url_for('ejerciciosGBM') }}" class="btn btn-dark w-100">
+                Usar todas las variables
+            </a>
+        </div>
+    </div>
+</div>
+
+{% if variable %}
+<div class="card p-3 mb-3">
+    <h5>Resultados del modelo con GBM</h5>
+    <p><b>Variable seleccionada:</b> {{ variable }}</p>
+    <p><b>Exactitud del modelo:</b> {{ accuracy }}</p>
+
+    <div class="mt-4">
+        <h6>Reporte de clasificación</h6>
+        {% if report %}
+        <table class="table table-striped table-bordered text-center">
+            <thead>
+                <tr>
+                    <th>Clase</th>
+                    <th>Precisión</th>
+                    <th>Recall</th>
+                    <th>F1-score</th>
+                    <th>Soporte</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for label, metrics in report.items() %}
+                    {% if label not in ["accuracy", "macro avg", "weighted avg"] %}
+                    <tr>
+                        <td>{{ label }}</td>
+                        <td>{{ metrics["precision"] | round(3) }}</td>
+                        <td>{{ metrics["recall"] | round(3) }}</td>
+                        <td>{{ metrics["f1-score"] | round(3) }}</td>
+                        <td>{{ metrics["support"] }}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+                <tr class="table-info">
+                    <td><b>Accuracy</b></td>
+                    <td colspan="4">{{ accuracy }}</td>
+                </tr>
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+
+    <div class="mt-4">
+        <h6>Importancia de las variables</h6>
+        <table class="table table-hover table-bordered text-center">
+            <thead>
+                <tr>
+                    <th>Variable</th>
+                    <th>Importancia</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in feature_importances %}
+                <tr>
+                    <td>{{ row["Variable"] }}</td>
+                    <td>{{ row["Importancia"] | round(4) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-4">
+        <h6>Matriz de Confusión</h6>
+        <img src="{{ url_for('static', filename=img_path) }}" 
+             alt="Matriz de Confusión - GBM"
+             class="img-fluid rounded shadow">
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
