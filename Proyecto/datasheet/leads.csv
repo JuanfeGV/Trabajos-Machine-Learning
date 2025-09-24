@@ -1,0 +1,16 @@
+Fuente,Interacciones,Visitas,Ingresos,Sector,ProbConversion
+Web,12,5,60000,Tech,Alto
+Email,3,1,20000,Retail,Bajo
+Referido,8,2,40000,Finanzas,Medio
+Web,15,7,75000,Tech,Alto
+Redes,5,3,35000,Servicios,Medio
+Email,2,1,18000,Retail,Bajo
+Referido,10,4,50000,Finanzas,Alto
+Web,7,2,30000,Tech,Medio
+Redes,6,3,28000,Servicios,Bajo
+Email,4,2,22000,Retail,Bajo
+Web,20,10,90000,Tech,Alto
+Referido,9,3,45000,Finanzas,Medio
+Redes,11,4,55000,Servicios,Alto
+Email,1,1,15000,Retail,Bajo
+Web,13,6,65000,Tech,Alto
