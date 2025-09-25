@@ -4,74 +4,36 @@
 
 <h1> MAPA CONCEPTUAL: Conceptos Basicos</h1>
 
-<section>
-    <h2>¿Qué es GBM?</h2>
-    <p>
-        <b>Gradient Boosting Machines (GBM)</b> es un algoritmo de <i>aprendizaje supervisado</i> basado en 
-        <b>árboles de decisión</b> que construye modelos de manera secuencial. 
-        Cada nuevo árbol corrige los errores cometidos por los anteriores, mejorando progresivamente el desempeño.
-    </p>
-    <p>
-        A diferencia de otros algoritmos de ensamble como <i>Random Forest</i>, donde los árboles son independientes, 
-        en GBM los árboles se construyen <b>de manera aditiva</b>, enfocándose en los casos mal clasificados.
-    </p>
-</section>
+
 
 <section>
-    <h2>¿Por qué usar GBM?</h2>
-    <ul>
-        <li>Alto rendimiento en problemas de clasificación y regresión.</li>
-        <li>Combina simplicidad de árboles con la potencia de modelos ensamble.</li>
-        <li>Maneja variables numéricas y categóricas.</li>
-        <li>Puede dar importancia relativa de cada variable (feature importance).</li>
-    </ul>
-</section>
+    <h2>Conclusiones</h2>
+<p>
+  La clasificación en Machine Learning es un eje crucial para el análisis de datos porque posibilita la asignación de categorías basándose en patrones aprendidos en la información. 
+</p>
+<p>
+  Hay diferentes perspectivas que difieren en términos de complejidad y aplicación: desde modelos lineales como las SVM y la regresión logística, hasta métodos fundamentados en distancia como k-NN, técnicas de probabilidades como Naive Bayes, y modelos más sofisticados como los ensambles o los árboles de decisión. 
+</p>
+<p>
+  A la vez, las redes neuronales multicapa constituyen una opción eficaz para abordar problemas complejos y no lineales.
+</p>
 
-<section>
-    <h2>Caso de estudio: Priorización de leads en marketing</h2>
-    <p>
-        En marketing, una tarea común es determinar qué clientes potenciales (<i>leads</i>) 
-        tienen mayor probabilidad de convertirse en clientes reales. 
-        Para esto, podemos usar GBM como clasificador.
-    </p>
-    <h3>Variables independientes (predictoras)</h3>
-    <ul>
-        <li><b>Fuente del lead:</b> cómo llegó el cliente (orgánico, pago, referido).</li>
-        <li><b>Interacciones con campañas:</b> número de interacciones con correos o anuncios.</li>
-        <li><b>Visitas al sitio web:</b> frecuencia de navegación en la página.</li>
-        <li><b>Ingresos estimados:</b> potencial económico del lead.</li>
-        <li><b>Sector económico:</b> industria a la que pertenece (tecnología, salud, retail, etc.).</li>
-    </ul>
+<p>
+  No obstante, todos los algoritmos, más allá de las diferencias técnicas, requieren un preprocesamiento de datos apropiado y una evaluación rigurosa a través de métricas de desempeño. 
+</p>
+<p>
+  Esto asegura, además de resultados exactos, interpretaciones fiables en el proceso de tomar decisiones. 
+</p>
+<p>
+  En resumen, entender la clasificación no solo supone saber sobre los algoritmos, sino también identificar sus puntos fuertes y débiles y el contexto en el que son más apropiados.
+</p>
 
-    <h3>Variable objetivo (a clasificar)</h3>
-    <p>
-        <b>Probabilidad de conversión:</b> inicialmente se clasifica en 
-        <i>Alto, Medio o Bajo</i>. Para simplificar el modelo en binario:
-    </p>
-    <ul>
-        <li><b>Alto / Medio</b> → Sí (1)</li>
-        <li><b>Bajo</b> → No (0)</li>
-    </ul>
-</section>
-
-<section>
-    <h2>Evaluación del modelo</h2>
-    <p>
-        Al entrenar el modelo con GBM, se evalúa su desempeño con:
-    </p>
-    <ul>
-        <li><b>Exactitud (Accuracy):</b> porcentaje de predicciones correctas.</li>
-        <li><b>Reporte de clasificación:</b> precisión (precision), sensibilidad (recall), 
-            F1-score y soporte de cada clase.</li>
-        <li><b>Matriz de confusión:</b> tabla 2×2 que muestra reales vs. predichos.</li>
-    </ul>
-</section>
 
 <section>
     <h2>Bibliografía</h2>
     <ul>
         <li>Friedman, J. H. (2001). "Greedy Function Approximation: A Gradient Boosting Machine". <i>The Annals of Statistics</i>.</li>
-        <li>Scikit-learn documentation: <a href="https://scikit-learn.org/stable/modules/ensemble.html#gradient-boosting" target="_blank">Gradient Boosting</a></li>
+        
         <li>Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow (Aurélien Géron, 2019).</li>
     </ul>
 </section>
