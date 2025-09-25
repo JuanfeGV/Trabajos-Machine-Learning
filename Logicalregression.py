@@ -9,7 +9,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix, accuracy_score, classification_report
 
 # Cargar dataset globalmente
-data = pd.read_csv('datasheet\data1.csv')
+data = pd.read_csv('datasheet/data1.csv')
 
 
 def evaluate(features, target="Renuncia", test_size=0.2, random_state=23):
