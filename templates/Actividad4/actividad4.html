@@ -1,17 +1,9 @@
 {% extends "base.html" %}
-{% block title %}Actividad 4 - Gradient Boosting{% endblock %}
+{% block title %}Actividad 4{% endblock %}
 {% block content %}
-
-<h1>Actividad 4</h1>
-<p class="lead">Tipos de Algoritmos de Clasificacion</p>
-
+<h2 class="mb-4">Actividad 4</h2>
 <div class="list-group">
-    <a href="{{ url_for('conceptosGBM') }}" class="list-group-item list-group-item-action">
-        Mapa Conceptual
-    </a>
-    <a href="{{ url_for('ejerciciosGBM') }}" class="list-group-item list-group-item-action">
-        Ejercicio práctico
-    </a>
+    <a href="{{ url_for('conceptosRL') }}" class="list-group-item list-group-item-action">Conceptos básicos de Aprendizaje por Refuerzo</a>
+    <a href="{{ url_for('ejerciciosRL') }}" class="list-group-item list-group-item-action">Ejercicio práctico</a>
 </div>
-
 {% endblock %}

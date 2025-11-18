@@ -1,0 +1,325 @@
+{% extends "base.html" %}
+{% block title %}Conceptos básicos de Aprendizaje por Refuerzo{% endblock %}
+{% block content %}
+
+<article class="blog-post">
+    <header class="mb-4">
+        <h1 class="fw-bold">Conceptos básicos de Aprendizaje por Refuerzo</h1>
+        <p class="text-muted">
+            Publicado el <time datetime="2025-11-17">17 de noviembre de 2025</time>
+        </p>
+    </header>
+
+    <section class="mb-4">
+        <h3>1. Definición General del Aprendizaje por Refuerzo</h3>
+        <p>
+            El <strong>Aprendizaje por Refuerzo (Reinforcement Learning, RL)</strong> es un paradigma de aprendizaje 
+            automático en el que un agente aprende a tomar decisiones secuenciales interactuando con un entorno. 
+            A través de un proceso de prueba y error, el agente recibe retroalimentación en forma de 
+            <em>recompensas</em> o <em>penalizaciones</em>, lo que le permite optimizar su comportamiento para 
+            maximizar la recompensa acumulada a largo plazo.
+        </p>
+
+        <h4 class="mt-4">Diferencias con otros paradigmas:</h4>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Aspecto</th>
+                        <th>Aprendizaje Supervisado</th>
+                        <th>Aprendizaje No Supervisado</th>
+                        <th>Aprendizaje por Refuerzo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Retroalimentación</strong></td>
+                        <td>Etiquetas correctas conocidas</td>
+                        <td>Sin retroalimentación explícita</td>
+                        <td>Recompensas/penalizaciones</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Objetivo</strong></td>
+                        <td>Minimizar error de predicción</td>
+                        <td>Encontrar patrones ocultos</td>
+                        <td>Maximizar recompensa acumulada</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Naturaleza</strong></td>
+                        <td>Mapear entrada → salida</td>
+                        <td>Análisis exploratorio</td>
+                        <td>Secuencia de decisiones</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ejemplo</strong></td>
+                        <td>Clasificación de imágenes</td>
+                        <td>Clustering de clientes</td>
+                        <td>Jugar ajedrez, robótica</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="mb-4">
+        <h3>2. Componentes del Modelo RL</h3>
+        
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5 class="mb-0">2.1 El Agente</h5>
+            </div>
+            <div class="card-body">
+                <p>
+                    Es la entidad que aprende e interactúa con el entorno. El agente percibe el estado actual, 
+                    toma acciones y recibe retroalimentación. Su objetivo es aprender una <strong>política</strong> 
+                    (estrategia) que maximice las recompensas esperadas a lo largo del tiempo.
+                </p>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5 class="mb-0">2.2 El Entorno</h5>
+            </div>
+            <div class="card-body">
+                <p>
+                    Es el mundo en el que el agente interactúa. Define las reglas, los estados posibles, 
+                    las transiciones entre estados y las recompensas. El entorno es típicamente modelado como 
+                    un <strong>Proceso de Decisión de Markov (MDP)</strong>.
+                </p>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5 class="mb-0">2.3 Estados (S)</h5>
+            </div>
+            <div class="card-body">
+                <p>
+                    Una descripción completa de la situación actual del entorno. En cada momento, el agente 
+                    se encuentra en un estado específico que contiene toda la información necesaria para tomar 
+                    decisiones. Los estados pueden ser discretos (limitados) o continuos (infinitos).
+                </p>
+                <p><em>Ejemplo:</em> En ajedrez, un estado es la posición de todas las piezas en el tablero.</p>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5 class="mb-0">2.4 Acciones (A)</h5>
+            </div>
+            <div class="card-body">
+                <p>
+                    Las decisiones que el agente puede tomar en cada estado. El conjunto de acciones disponibles 
+                    puede ser diferente para cada estado. Las acciones determinan la evolución del sistema.
+                </p>
+                <p><em>Ejemplo:</em> En un robot navegador: avanzar, retroceder, girar izquierda, girar derecha.</p>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5 class="mb-0">2.5 Recompensas (R)</h5>
+            </div>
+            <div class="card-body">
+                <p>
+                    Señales numéricas que indican el éxito o fracaso de una acción. Las recompensas pueden ser 
+                    positivas (incentivos) o negativas (penalizaciones). Son el único mecanismo de retroalimentación 
+                    del agente.
+                </p>
+                <p><em>Propiedad clave:</em> La recompensa debe reflejar exactamente lo que queremos que el agente logre.</p>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5 class="mb-0">2.6 Política (π)</h5>
+            </div>
+            <div class="card-body">
+                <p>
+                    Es el "cerebro" del agente: una función que mapea estados a acciones. Define el comportamiento 
+                    del agente en cada situación. El objetivo de RL es encontrar la <strong>política óptima</strong> 
+                    que maximice las recompensas acumuladas.
+                </p>
+                <p><em>Notación:</em> π(a|s) = probabilidad de tomar acción a en estado s</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-4">
+        <h3>3. Principios del Ciclo de Aprendizaje</h3>
+
+        <h4 class="mt-4">3.1 Exploración vs. Explotación</h4>
+        <p>
+            El dilema fundamental en RL es balancear:
+        </p>
+        <ul>
+            <li>
+                <strong>Exploración:</strong> Probar acciones nuevas para descubrir soluciones mejores. 
+                Si solo explotamos, podemos quedarnos atrapados en soluciones subóptimas.
+            </li>
+            <li>
+                <strong>Explotación:</strong> Usar el conocimiento actual para obtener mejores recompensas ahora. 
+                Si solo exploramos, no aprovechamos lo que hemos aprendido.
+            </li>
+        </ul>
+        <p>
+            <strong>Estrategia epsilon-greedy:</strong> Con probabilidad epsilon exploramos aleatoriamente; 
+            con probabilidad (1-epsilon) explotamos la mejor acción conocida.
+        </p>
+
+        <h4 class="mt-4">3.2 Retorno Acumulado (G)</h4>
+        <p>
+            El objetivo es maximizar la suma de recompensas futuras:
+        </p>
+        <p class="text-center"><code>G_t = R_{t+1} + R_{t+2} + R_{t+3} + ...</code></p>
+        <p>
+            Maximizar solo recompensas inmediatas puede llevar a decisiones miopes. RL busca el óptimo a largo plazo.
+        </p>
+
+        <h4 class="mt-4">3.3 Descuento Temporal (γ)</h4>
+        <p>
+            Las recompensas futuras valen menos que las presentes:
+        </p>
+        <p class="text-center"><code>G_t = R_{t+1} + γ·R_{t+2} + γ²·R_{t+3} + ...</code></p>
+        <p>
+            Donde γ (gamma) está en [0,1] es el factor de descuento:
+        </p>
+        <ul>
+            <li>γ = 0: Solo importan recompensas inmediatas</li>
+            <li>γ = 1: Todas las recompensas futuras tienen igual peso</li>
+            <li>γ = 0.95: Valor típico, balancea presente y futuro</li>
+        </ul>
+    </section>
+
+    <section class="mb-4">
+        <h3>4. Algoritmos Principales de RL</h3>
+
+        <h4 class="mt-4">4.1 Q-Learning</h4>
+        <div class="alert alert-info">
+            <p>
+                <strong>Q-Learning</strong> es un algoritmo off-policy que aprende el valor óptimo 
+                de cada acción en cada estado, independientemente de la política seguida.
+            </p>
+            <p><strong>Ecuación de actualización:</strong></p>
+            <p class="text-center" style="font-family: monospace; background: #f8f9fa; padding: 10px; border-radius: 5px;">
+                Q(s,a) ← Q(s,a) + α·[r + γ·max_a Q(s',a) - Q(s,a)]
+            </p>
+            <p>
+                <strong>Ventajas:</strong> Simple, converge a la política óptima, off-policy
+            </p>
+            <p>
+                <strong>Desventajas:</strong> Ineficiente con espacios grandes, requiere tabla Q
+            </p>
+            <p>
+                <strong>Aplicaciones:</strong> Juegos, navegación, control de robots simples
+            </p>
+        </div>
+
+        <h4 class="mt-4">4.2 SARSA (State-Action-Reward-State-Action)</h4>
+        <div class="alert alert-warning">
+            <p>
+                <strong>SARSA</strong> es un algoritmo on-policy que actualiza Q-values usando 
+                la acción realmente ejecutada, no la mejor acción posible.
+            </p>
+            <p><strong>Ecuación de actualización:</strong></p>
+            <p class="text-center" style="font-family: monospace; background: #f8f9fa; padding: 10px; border-radius: 5px;">
+                Q(s,a) ← Q(s,a) + α·[r + γ·Q(s',a') - Q(s,a)]
+            </p>
+            <p>
+                <strong>Ventajas:</strong> Converge a política óptima en entornos estocásticos, on-policy
+            </p>
+            <p>
+                <strong>Desventajas:</strong> Más lento que Q-Learning, requiere tabla Q
+            </p>
+        </div>
+
+        <h4 class="mt-4">4.3 Deep Q-Network (DQN)</h4>
+        <div class="alert alert-success">
+            <p>
+                <strong>DQN</strong> reemplaza la tabla Q con una red neuronal profunda, permitiendo 
+                manejo de espacios de estados continuos y muy grandes.
+            </p>
+            <p>
+                <strong>Innovaciones:</strong>
+            </p>
+            <ul>
+                <li>Red neuronal paramétrica: Q(s,a;θ)</li>
+                <li>Experience Replay: almacena y muestrea experiencias pasadas</li>
+                <li>Target Network: red separada para estabilidad</li>
+            </ul>
+            <p>
+                <strong>Ventajas:</strong> Maneja espacios complejos, mejor generalización
+            </p>
+            <p>
+                <strong>Desventajas:</strong> Complejo, requiere computación GPU, inestable
+            </p>
+            <p>
+                <strong>Aplicaciones:</strong> Juegos Atari, navegación autónoma, robótica compleja
+            </p>
+        </div>
+    </section>
+
+    <section class="mb-4">
+        <h3>5. Buenas Prácticas en RL</h3>
+
+        <h4 class="mt-4">5.1 Estabilidad del Aprendizaje</h4>
+        <ul>
+            <li><strong>Normalizar recompensas:</strong> Escalar recompensas al rango [-1, 1]</li>
+            <li><strong>Experience Replay:</strong> Muestrear experiencias aleatorias para decorrelacionar datos</li>
+            <li><strong>Target Networks:</strong> Usar red separada para cálculos de objetivo</li>
+            <li><strong>Gradient clipping:</strong> Limitar magnitud de gradientes</li>
+        </ul>
+
+        <h4 class="mt-4">5.2 Tasa de Exploración</h4>
+        <ul>
+            <li><strong>Decaimiento gradual:</strong> ε comienza alto (exploración) y decae con el tiempo</li>
+            <li><strong>Mínimo exploración:</strong> Siempre mantener ε_min > 0</li>
+            <li><strong>Exploration bonus:</strong> Bonus por visitar estados nuevos (en algunos algoritmos)</li>
+        </ul>
+
+        <h4 class="mt-4">5.3 Manejo de Recompensas</h4>
+        <ul>
+            <li><strong>Diseño inteligente:</strong> La función de recompensa debe reflejar exactamente el objetivo</li>
+            <li><strong>Reward shaping:</strong> Proporcionar recompensas intermedias para guiar el aprendizaje</li>
+            <li><strong>Escalado:</strong> Recompensas muy grandes causan divergencia</li>
+        </ul>
+
+        <h4 class="mt-4">5.4 Convergencia y Generalización</h4>
+        <ul>
+            <li><strong>Convergencia garantizada:</strong> Q-Learning converge con tablas discretas</li>
+            <li><strong>Criterio de parada:</strong> Detectar convergencia monitoreando cambios en Q-values</li>
+            <li><strong>Validación:</strong> Evaluar en entornos de prueba, no solo en entrenamiento</li>
+            <li><strong>Regularización:</strong> Aplicar L1/L2 para evitar overfitting en DQN</li>
+        </ul>
+    </section>
+
+    <section class="mb-4">
+        <h3>6. Referencias</h3>
+        <div class="alert alert-secondary">
+            <p>
+                <strong>Miró Tost, J. (2018).</strong> 
+                <em>Aprendizaje automático: algoritmos supervisados, no supervisados y por refuerzo.</em> 
+                Universitat Oberta de Catalunya. 
+            </p>
+            <p>
+                <strong>Russell, S. J., & Norvig, P. (2020).</strong> 
+                <em>Inteligencia artificial: un enfoque moderno</em> (4ta ed.). 
+                Pearson. 
+            </p>
+            <p>
+                <strong>Fernández de Alba, J. M. (2019).</strong> 
+                <em>Q-Learning y aprendizaje por refuerzo: teoría y aplicaciones.</em> 
+                Revista de Inteligencia Artificial, 22(63), 45-62. 
+            </p>
+            <p>
+                <strong>García-Borrós, M., & Villegas, P. (2021).</strong> 
+                <em>Reinforcement Learning en sistemas autónomos: aplicaciones y desafíos.</em> 
+                <em>Procesamiento del Lenguaje Natural, 67,</em> 89-102. 
+            </p>
+        </div>
+    </section>
+
+</article>
+
+{% endblock %}
