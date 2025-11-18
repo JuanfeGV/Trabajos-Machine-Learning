@@ -1,0 +1,395 @@
+{% extends "base.html" %}
+{% block title %}Ejercicio práctico de Aprendizaje por Refuerzo{% endblock %}
+{% block content %}
+
+<h1><b>Ejercicio práctico de Aprendizaje por Refuerzo</b></h1>
+
+<div class="card p-3 mb-3">
+    <h5>Descripción del Caso</h5>
+    <p>
+        En este ejercicio entrenaremos un agente Q-Learning a navegar en un entorno tipo GridWorld (cuadrícula).
+        El objetivo es que el agente aprenda a llegar desde su posición inicial (esquina superior izquierda) 
+        hasta el objetivo (esquina inferior derecha) en el menor número de pasos.
+    </p>
+</div>
+
+<div class="card p-3 mb-3">
+    <h5>Parámetros Recomendados</h5>
+    <div class="alert alert-info">
+        <strong>Valores Seguros para Evitar Errores:</strong>
+        <ul class="mb-0">
+            <li><strong>Episodios:</strong> 20 a 500 (recomendado: 200)</li>
+            <li><strong>Tasa Aprendizaje:</strong> 0.01 a 1.0 (recomendado: 0.1)</li>
+            <li><strong>Factor Descuento:</strong> 0.5 a 0.99 (recomendado: 0.95)</li>
+            <li><strong>Tamaño Grid:</strong> 3x3 (fácil), 5x5 (medio), 7x7 (difícil)</li>
+        </ul>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <div class="card p-3">
+            <h5>Parámetros de Entrenamiento</h5>
+            <div class="form-group">
+                <label for="numEpisodes"><strong>Número de Episodios:</strong></label>
+                <input type="number" class="form-control" id="numEpisodes" value="200" min="20" max="500">
+                <small class="form-text text-muted">
+                    <span id="episodesHelp">✓ 200 episodios (recomendado)</span>
+                </small>
+            </div>
+            <div class="form-group">
+                <label for="learningRate"><strong>Tasa de Aprendizaje (α):</strong></label>
+                <input type="number" class="form-control" id="learningRate" value="0.1" min="0.01" max="1.0" step="0.01">
+                <small class="form-text text-muted">
+                    <span id="lrHelp">✓ 0.1 (velocidad: media)</span>
+                </small>
+            </div>
+            <div class="form-group">
+                <label for="discountFactor"><strong>Factor de Descuento (γ):</strong></label>
+                <input type="number" class="form-control" id="discountFactor" value="0.95" min="0.5" max="0.99" step="0.01">
+                <small class="form-text text-muted">
+                    <span id="dfHelp">✓ 0.95 (considera el futuro moderadamente)</span>
+                </small>
+            </div>
+            <div class="form-group">
+                <label for="gridSize"><strong>Tamaño de la Cuadrícula:</strong></label>
+                <select class="form-control" id="gridSize">
+                    <option value="3">3 x 3 (Fácil - 9 celdas)</option>
+                    <option value="5" selected>5 x 5 (Medio - 25 celdas)</option>
+                    <option value="7">7 x 7 (Difícil - 49 celdas)</option>
+                </select>
+                <small class="form-text text-muted">
+                    <span id="gsHelp">✓ 5x5 (balance entre complejidad y velocidad)</span>
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card p-3">
+            <h5>Estadísticas de Entrenamiento</h5>
+            <div class="stat-box">
+                <strong>Total Episodios:</strong> <span id="statEpisodes">-</span>
+            </div>
+            <div class="stat-box">
+                <strong>Recompensa Promedio:</strong> <span id="statAvgReward">-</span>
+            </div>
+            <div class="stat-box">
+                <strong>Recompensa Máxima:</strong> <span id="statMaxReward">-</span>
+            </div>
+            <div class="stat-box">
+                <strong>Últimos 10 Episodios:</strong> <span id="statFinalAvg">-</span>
+            </div>
+            <div class="stat-box">
+                <strong>Estado:</strong> <span id="trainingStatus" class="badge bg-secondary">Listo</span>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+    </div>
+</div>
+
+<div class="mb-3 text-center">
+    <button class="btn btn-success btn-lg" id="trainBtn">
+        Iniciar Entrenamiento
+    </button>
+    <button class="btn btn-warning btn-lg" id="simulateBtn" disabled>
+        Simular Episodio
+    </button>
+    <button class="btn btn-info btn-lg" id="resetBtn">
+        Reiniciar
+    </button>
+</div>
+
+<div class="row mb-3">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0">Evolución de Recompensas</h5>
+            </div>
+            <div class="card-body">
+                <img id="rewardsChart" src="" alt="Gráfico de recompensas" class="img-fluid" style="display:none;">
+                <p id="chartsPlaceholder" class="text-muted text-center">Los gráficos aparecerán aquí después del entrenamiento</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0">Convergencia (Pasos por Episodio)</h5>
+            </div>
+            <div class="card-body">
+                <img id="lengthsChart" src="" alt="Gráfico de longitudes" class="img-fluid" style="display:none;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0">Visualización del Entorno y Trayectoria</h5>
+            </div>
+            <div class="card-body text-center">
+                <div id="envContainer">
+                    <p class="text-muted">La visualización del entorno aparecerá aquí</p>
+                </div>
+                <img id="envImage" src="" alt="Entorno GridWorld" class="img-fluid" style="display:none; max-width:400px;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="alert alert-info">
+            <h5>Consejos:</h5>
+            <ul>
+                <li><strong>Más episodios.</strong> Mejor convergencia pero mayor tiempo de entrenamiento</li>
+                <li><strong>Tasa de aprendizaje alta (0.5-1):</strong> Aprendizaje rápido pero inestable</li>
+                <li><strong>Tasa de aprendizaje baja (0.01-0.1):</strong> Estable pero convergencia lenta</li>
+                <li><strong>Descuento alto (γ=0.99):</strong> El agente considera mucho el futuro</li>
+                <li><strong>Descuento bajo (γ=0.7):</strong> El agente es más miope, busca recompensas inmediatas</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<style>
+    .stat-box {
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+        font-size: 0.95rem;
+    }
+    
+    .stat-box:last-child {
+        border-bottom: none;
+    }
+    
+    .btn-lg {
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+
+<script>
+    let trainedAgent = null;
+    let trainingData = null;
+
+    // Validación en tiempo real de parámetros
+    document.getElementById('numEpisodes').addEventListener('change', function() {
+        const val = parseInt(this.value);
+        const help = document.getElementById('episodesHelp');
+        if (val < 20 || val > 500) {
+            help.textContent = 'Valor fuera de rango (20-500)';
+            help.style.color = '#dc3545';
+        } else {
+            help.textContent = val + ' episodios';
+            help.style.color = '#28a745';
+        }
+    });
+
+    document.getElementById('learningRate').addEventListener('change', function() {
+        const val = parseFloat(this.value);
+        const help = document.getElementById('lrHelp');
+        let speed = 'media';
+        if (val < 0.05) speed = 'lenta (convergencia estable)';
+        else if (val > 0.5) speed = 'rápida (puede ser inestable)';
+        
+        if (val < 0.01 || val > 1.0) {
+            help.textContent = 'Valor fuera de rango (0.01-1.0)';
+            help.style.color = '#dc3545';
+        } else {
+            help.textContent = val + ' (velocidad: ' + speed + ')';
+            help.style.color = '#28a745';
+        }
+    });
+
+    document.getElementById('discountFactor').addEventListener('change', function() {
+        const val = parseFloat(this.value);
+        const help = document.getElementById('dfHelp');
+        let focus = 'considera el futuro moderadamente';
+        if (val < 0.7) focus = 'más miope (recompensas inmediatas)';
+        else if (val > 0.95) focus = 'más previsivo (recompensas futuras)';
+        
+        if (val < 0.5 || val > 0.99) {
+            help.textContent = 'Valor fuera de rango (0.5-0.99)';
+            help.style.color = '#dc3545';
+        } else {
+            help.textContent = val + ' (' + focus + ')';
+            help.style.color = '#28a745';
+        }
+    });
+
+    document.getElementById('gridSize').addEventListener('change', function() {
+        const val = parseInt(this.value);
+        const help = document.getElementById('gsHelp');
+        let desc = 'balance entre complejidad y velocidad';
+        if (val === 3) desc = 'fácil, entrenamiento rápido';
+        else if (val === 7) desc = 'difícil, entrenamiento lento';
+        
+        help.textContent = val + 'x' + val + ' (' + desc + ')';
+        help.style.color = '#28a745';
+    });
+
+    function validateInputs() {
+        const numEpisodes = parseInt(document.getElementById('numEpisodes').value);
+        const learningRate = parseFloat(document.getElementById('learningRate').value);
+        const discountFactor = parseFloat(document.getElementById('discountFactor').value);
+
+        const errors = [];
+        if (numEpisodes < 20 || numEpisodes > 500) {
+            errors.push('Episodios: debe estar entre 20 y 500');
+        }
+        if (learningRate < 0.01 || learningRate > 1.0) {
+            errors.push('Tasa Aprendizaje: debe estar entre 0.01 y 1.0');
+        }
+        if (discountFactor < 0.5 || discountFactor > 0.99) {
+            errors.push('Factor Descuento: debe estar entre 0.5 y 0.99');
+        }
+
+        if (errors.length > 0) {
+            alert('Errores en parámetros:\n\n' + errors.join('\n'));
+            return false;
+        }
+        return true;
+    }
+
+    document.getElementById('trainBtn').addEventListener('click', async function() {
+        if (!validateInputs()) {
+            return;
+        }
+
+        const numEpisodes = parseInt(document.getElementById('numEpisodes').value);
+        const learningRate = parseFloat(document.getElementById('learningRate').value);
+        const discountFactor = parseFloat(document.getElementById('discountFactor').value);
+        const gridSize = parseInt(document.getElementById('gridSize').value);
+
+        this.disabled = true;
+        document.getElementById('trainingStatus').textContent = 'Entrenando...';
+        document.getElementById('trainingStatus').className = 'badge bg-warning';
+
+        try {
+            const response = await fetch('/actividad4/train', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    num_episodes: numEpisodes,
+                    learning_rate: learningRate,
+                    discount_factor: discountFactor,
+                    grid_size: gridSize
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                trainedAgent = data.agent_id;
+                trainingData = data;
+
+                document.getElementById('statEpisodes').textContent = data.stats.total_episodes;
+                document.getElementById('statAvgReward').textContent = data.stats.avg_reward.toFixed(3);
+                document.getElementById('statMaxReward').textContent = data.stats.max_reward.toFixed(3);
+                document.getElementById('statFinalAvg').textContent = data.stats.final_avg.toFixed(3);
+
+                document.getElementById('rewardsChart').src = data.images.rewards;
+                document.getElementById('rewardsChart').style.display = 'block';
+                document.getElementById('lengthsChart').src = data.images.lengths;
+                document.getElementById('lengthsChart').style.display = 'block';
+                document.getElementById('chartsPlaceholder').style.display = 'none';
+
+                document.getElementById('simulateBtn').disabled = false;
+
+                document.getElementById('trainingStatus').textContent = 'Completado';
+                document.getElementById('trainingStatus').className = 'badge bg-success';
+
+                alert('Entrenamiento completado exitosamente!');
+            } else {
+                const errorMsg = data.error || 'Error desconocido en el entrenamiento';
+                alert('Error: ' + errorMsg);
+                document.getElementById('trainingStatus').textContent = 'Error';
+                document.getElementById('trainingStatus').className = 'badge bg-danger';
+            }
+        } catch (error) {
+            console.error('Error en entrenamiento:', error);
+            alert('Error en la solicitud: ' + error.message);
+            document.getElementById('trainingStatus').textContent = 'Error';
+            document.getElementById('trainingStatus').className = 'badge bg-danger';
+        } finally {
+            this.disabled = false;
+        }
+    });
+
+    document.getElementById('simulateBtn').addEventListener('click', async function() {
+        if (!trainedAgent) {
+            alert('Primero debe entrenar un agente');
+            return;
+        }
+
+        this.disabled = true;
+        document.getElementById('trainingStatus').textContent = 'Simulando...';
+        document.getElementById('trainingStatus').className = 'badge bg-info';
+
+        try {
+            const response = await fetch('/actividad4/simulate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    agent_id: trainedAgent
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success === true && data.image) {
+                document.getElementById('envImage').src = data.image;
+                document.getElementById('envImage').style.display = 'block';
+                
+                const objectiveAchieved = data.success;
+                const alertClass = objectiveAchieved ? 'alert-success' : 'alert-warning';
+                const statusText = objectiveAchieved ? 'OBJETIVO ALCANZADO' : 'OBJETIVO NO ALCANZADO';
+                const statusColor = objectiveAchieved ? '#28a745' : '#ff6b6b';
+                
+                document.getElementById('envContainer').innerHTML = `
+                    <div class="alert ${alertClass}" style="font-size: 1.1rem;">
+                        <h4 style="color: ${statusColor}; margin-bottom: 15px;"><strong>${statusText}</strong></h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: left;">
+                            <div>
+                                <strong>Recompensa Total:</strong> <span style="font-size: 1.1rem;">${data.total_reward.toFixed(3)}</span>
+                            </div>
+                            <div>
+                                <strong>Pasos Dados:</strong> <span style="font-size: 1.1rem;">${data.steps}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('trainingStatus').textContent = 'Simulación completada';
+                document.getElementById('trainingStatus').className = 'badge bg-success';
+            } else {
+                const errorMsg = data.error || 'Error desconocido en la simulación';
+                alert('Error: ' + errorMsg);
+                document.getElementById('trainingStatus').textContent = 'Error';
+                document.getElementById('trainingStatus').className = 'badge bg-danger';
+            }
+        } catch (error) {
+            console.error('Error en simulación:', error);
+            alert('Error en la solicitud: ' + error.message);
+            document.getElementById('trainingStatus').textContent = 'Error';
+            document.getElementById('trainingStatus').className = 'badge bg-danger';
+        } finally {
+            this.disabled = false;
+        }
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', function() {
+        location.reload();
+    });
+</script>
+
+{% endblock %}
